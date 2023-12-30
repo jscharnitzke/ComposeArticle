@@ -3,13 +3,23 @@ package com.example.composearticle
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.composearticle.ui.theme.ComposeArticleTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,7 +32,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    AppBody()
                 }
             }
         }
@@ -30,17 +40,59 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
+fun AppBody(modifier: Modifier = Modifier) {
+    Column() {
+        HeaderImage(modifier = modifier)
+        TitleText(modifier = modifier)
+        DescriptionText(modifier = modifier)
+        SummaryText(modifier = modifier)
+    }
+}
+
+@Composable
+fun DescriptionText(modifier: Modifier = Modifier) {
     Text(
-        text = "Hello $name!",
-        modifier = modifier
+        modifier = modifier.padding(
+            horizontal = 16.dp,
+        ),
+        text = stringResource(R.string.description_text),
+        textAlign = TextAlign.Justify
+    )
+}
+
+@Composable
+fun HeaderImage(modifier: Modifier = Modifier) {
+    val image: Painter = painterResource(id = R.drawable.bg_compose_background)
+
+    Image(
+        contentDescription = null,
+        contentScale = ContentScale.FillWidth,
+        modifier = modifier,
+        painter = image)
+}
+
+@Composable
+fun SummaryText(modifier: Modifier = Modifier) {
+    Text(
+        modifier = modifier.padding(16.dp),
+        text = stringResource(R.string.summary_text),
+        textAlign = TextAlign.Justify,
+    )
+}
+
+@Composable
+fun TitleText(modifier: Modifier = Modifier) {
+    Text(
+        modifier = modifier.padding(16.dp),
+        fontSize = 24.sp,
+        text = stringResource(R.string.title_text)
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
+fun ComposeArticlePreview() {
     ComposeArticleTheme {
-        Greeting("Android")
+        AppBody()
     }
 }
